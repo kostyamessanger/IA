@@ -85,7 +85,7 @@ jobs:
           include ':app'
           EOF
 
-      - name: Create app/build.gradle (ИСПРАВЛЕННЫЙ - с Kotlin и иконкой)
+      - name: Create app/build.gradle
         run: |
           cat > app/build.gradle << 'EOF'
           plugins {
@@ -128,7 +128,7 @@ jobs:
           }
           EOF
 
-      - name: Create AndroidManifest.xml (без иконки)
+      - name: Create AndroidManifest.xml
         run: |
           cat > app/src/main/AndroidManifest.xml << 'EOF'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
@@ -350,7 +350,7 @@ jobs:
           </LinearLayout>
           EOF
 
-      - name: Create activity_install.xml
+      - name: Create activity_install.xml (ИСПРАВЛЕННЫЙ)
         run: |
           cat > app/src/main/res/layout/activity_install.xml << 'EOF'
           <?xml version="1.0" encoding="utf-8"?>
@@ -389,7 +389,10 @@ jobs:
                   android:textSize="18sp"
                   android:background="#4CAF50"
                   android:textColor="#FFFFFF"
-                  android:padding="12dp 24dp"
+                  android:paddingLeft="24dp"
+                  android:paddingRight="24dp"
+                  android:paddingTop="12dp"
+                  android:paddingBottom="12dp"
                   android:layout_marginTop="24dp" />
           </LinearLayout>
           EOF
