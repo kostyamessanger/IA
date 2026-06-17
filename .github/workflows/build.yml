@@ -85,15 +85,17 @@ jobs:
           include ':app'
           EOF
 
-      - name: Create app/build.gradle
+      - name: Create app/build.gradle (ИСПРАВЛЕННЫЙ - с Kotlin и иконкой)
         run: |
           cat > app/build.gradle << 'EOF'
           plugins {
               id 'com.android.application'
           }
+
           android {
               namespace 'com.ia.installer'
               compileSdk 34
+
               defaultConfig {
                   applicationId 'com.ia.installer'
                   minSdk 21
@@ -101,6 +103,7 @@ jobs:
                   versionCode 1
                   versionName '1.0'
               }
+
               buildTypes {
                   release {
                       minifyEnabled false
@@ -108,20 +111,31 @@ jobs:
                   }
               }
           }
+
           dependencies {
               implementation 'androidx.appcompat:appcompat:1.6.1'
               implementation 'androidx.core:core:1.12.0'
+              
+              implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.22'
+              implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22'
+          }
+
+          configurations.all {
+              resolutionStrategy {
+                  force 'org.jetbrains.kotlin:kotlin-stdlib:1.8.22'
+                  force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22'
+              }
           }
           EOF
 
-      - name: Create AndroidManifest.xml (ИСПРАВЛЕННЫЙ)
+      - name: Create AndroidManifest.xml (без иконки)
         run: |
           cat > app/src/main/AndroidManifest.xml << 'EOF'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
               <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
               <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
               <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-              <application android:label="IA" android:icon="@mipmap/ic_launcher">
+              <application android:label="IA">
                   <activity android:name=".MainActivity" android:exported="true">
                       <intent-filter>
                           <action android:name="android.intent.action.MAIN" />
