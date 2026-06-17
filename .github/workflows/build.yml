@@ -114,22 +114,21 @@ jobs:
           }
           EOF
 
-      - name: Create AndroidManifest.xml
+      - name: Create AndroidManifest.xml (ИСПРАВЛЕННЫЙ)
         run: |
           cat > app/src/main/AndroidManifest.xml << 'EOF'
-          <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-              package="com.ia.installer">
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
               <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
               <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
               <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
               <application android:label="IA" android:icon="@mipmap/ic_launcher">
-                  <activity android:name=".MainActivity">
+                  <activity android:name=".MainActivity" android:exported="true">
                       <intent-filter>
                           <action android:name="android.intent.action.MAIN" />
                           <category android:name="android.intent.category.LAUNCHER" />
                       </intent-filter>
                   </activity>
-                  <activity android:name=".InstallActivity" />
+                  <activity android:name=".InstallActivity" android:exported="false" />
                   <provider
                       android:name="androidx.core.content.FileProvider"
                       android:authorities="com.ia.installer.fileprovider"
